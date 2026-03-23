@@ -1,0 +1,36 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+venv/
+env/
+ENV/
+*.db
+
+# Node
+node_modules/
+dist/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Storage (uploaded files)
+docs/storage/uploads/
+docs/storage/templates/
+docs/storage/generated/
+*.docx
+
+# Database
+*.db
+
+# Environment
+.env
