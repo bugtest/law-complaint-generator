@@ -1,9 +1,9 @@
 import json
 from typing import Dict, Any, Optional
-from ..config import ANTHROPIC_API_KEY, AI_MODEL
+from ..config import QWEN_API_KEY, AI_MODEL
 
 class AIExtractor:
-    """AI-powered element extraction from legal documents"""
+    """AI-powered element extraction from legal documents using Qwen"""
 
     EXTRACTION_PROMPT = """你是一位专业的法律文书助手。请从以下文档中提取起诉状的要素信息。
 
@@ -53,19 +53,20 @@ class AIExtractor:
 """
 
     def __init__(self):
-        self.api_key = ANTHROPIC_API_KEY
+        self.api_key = QWEN_API_KEY
         self.model = AI_MODEL
         self._client = None
 
     def _init_client(self):
-        """Lazy initialize Anthropic client"""
+        """Lazy initialize DashScope client for Qwen"""
         if self._client is None and self.api_key:
-            import anthropic
-            self._client = anthropic.Anthropic(api_key=self.api_key)
+            import dashscope
+            dashscope.api_key = self.api_key
+            self._client = dashscope
 
     def extract_elements(self, evidence_text: str, organized_text: str) -> Dict[str, Any]:
         """
-        Extract legal elements from documents using AI
+        Extract legal elements from documents using Qwen
 
         Returns:
             {
@@ -80,27 +81,26 @@ class AIExtractor:
                 "success": False,
                 "elements": {},
                 "confidence": 0,
-                "error": "未配置 Anthropic API Key"
+                "error": "未配置 Qwen API Key"
             }
 
         try:
-            self._init_client()
-
             prompt = self.EXTRACTION_PROMPT.format(
                 evidence_text=evidence_text[:8000] if evidence_text else "",
                 organized_text=organized_text[:8000] if organized_text else ""
             )
 
-            response = self._client.messages.create(
+            from dashscope import Generation
+            response = Generation.call(
                 model=self.model,
-                max_tokens=2000,
                 messages=[
                     {"role": "user", "content": prompt}
-                ]
+                ],
+                max_tokens=2000
             )
 
             # Parse the response
-            response_text = response.content[0].text
+            response_text = response.output.choices[0].message.content
 
             # Extract JSON from response
             import re

@@ -20,8 +20,8 @@ FILE_STORAGE_PATH.mkdir(parents=True, exist_ok=True)
 MAX_FILE_SIZE_MB = int(os.getenv("MAX_FILE_SIZE_MB", "50"))
 
 # AI
-ANTHROPIC_API_KEY = os.getenv("ANTHROPIC_API_KEY", "")
-AI_MODEL = os.getenv("AI_MODEL", "claude-sonnet-4-20250514")
+QWEN_API_KEY = os.getenv("QWEN_API_KEY", "")
+AI_MODEL = os.getenv("AI_MODEL", "qwen3.5-plus")
 
 # OCR
 OCR_ENABLED = os.getenv("OCR_ENABLED", "true").lower() == "true"

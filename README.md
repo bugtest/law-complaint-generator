@@ -21,7 +21,7 @@ python -m venv venv
 source venv/bin/activate  # Windows: venv\Scripts\activate
 pip install -r requirements.txt
 cp .env.example .env
-# 编辑.env 配置 ANTHROPIC_API_KEY 等
+# 编辑.env 配置 QWEN_API_KEY 等
 uvicorn app.main:app --reload --host 0.0.0.0 --port 8000
 ```
 
@@ -51,8 +51,8 @@ FILE_STORAGE_PATH=./docs/storage
 MAX_FILE_SIZE_MB=50
 
 # AI 配置
-ANTHROPIC_API_KEY=sk-...
-AI_MODEL=claude-sonnet-4-20250514
+QWEN_API_KEY=sk-...  # 在 DashScope 控制台获取
+AI_MODEL=qwen3.5-plus
 
 # OCR 配置
 OCR_ENABLED=true
@@ -106,7 +106,7 @@ pytest tests/ -v
 - JWT + bcrypt - 用户认证
 - pdfplumber, PyMuPDF - PDF 解析
 - python-docx - Word 处理
-- Anthropic Claude API - AI 要素提取
+- 通义千问 Qwen API - AI 要素提取
 
 **前端：**
 - Vue 3 - 前端框架
@@ -160,6 +160,6 @@ pytest tests/ -v
 ## 注意事项
 
 - 首次使用需要上传 Word 起诉状模板
-- AI 要素提取需要配置 Anthropic API Key
+- AI 要素提取需要配置 Qwen API Key（在 https://dashscope.console.aliyun.com/ 获取）
 - OCR 功能可选，如需使用请安装：pip install paddlepaddle paddleocr
 - 敏感数据请妥善保管，建议本地部署
